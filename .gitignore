@@ -2,3 +2,7 @@ bin
 /bin
 *.class
 *.log
+.classpath
+.project
+.settings/
+.vscode/
