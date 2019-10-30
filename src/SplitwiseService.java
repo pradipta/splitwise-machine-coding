@@ -2,7 +2,7 @@ import java.util.Date;
 import java.util.List;
 
 public class SplitwiseService {
-	public static Expense createExpense(ExpenseType type, double amount, User payee, List<Split> splits) {
+	public static Expense createExpense(ExpenseType type, double amount, User paidBy, List<Split> splits) {
 		switch (type) {
 		//change to cases for EQUAL, EXACT, PERCENT when implemented
 		default:
@@ -13,7 +13,7 @@ public class SplitwiseService {
 			}
 			//to avoid decimal error. Like 100/3 = 33.33, adds up to 99.99. To avoid that
 			splits.get(0).setAmount(splitAmount + amount - splitAmount*totalSplits);
-			return new EqualExpense(amount, payee, new Date(), splits);
+			return new EqualExpense(amount, paidBy, new Date(), splits);
 		}
 	}
 }

@@ -14,35 +14,35 @@ public class ExpenseManager {
 
 	public void addUder(User user) {
 		userMap.put(user.getId(), user);
-		balanceSheet.put(user.getId(), new HashMap<String, Double>());
+		balanceSheet.put(user, new HashMap<User, Double>());
 	}
 	
-	public void addExpense (ExpenseType type, double amount, User payee, List<Split> splits) {
+	public void addExpense (ExpenseType type, double amount, User paidBy, List<Split> splits) {
 		//TODO add expense, add to expenses list, add to balance sheet
-		Expense newExpense = SplitwiseService.createExpense(type, amount, payee, splits);
+		Expense newExpense = SplitwiseService.createExpense(type, amount, paidBy, splits);
 		expenses.add(newExpense);
 		
 		for (Split split : newExpense.getSplits()) {
 			User paidTo = split.getUser();
-			Map<User, Double> balances = balanceSheet.get(payee);
+			Map<User, Double> balances = balanceSheet.get(paidBy);
 			if (!balances.containsKey(paidTo)) {
 				balances.put(paidTo, 0.0);
 			}
 			balances.put(paidTo, balances.get(paidTo)+split.getAmount());
 			balances = balanceSheet.get(paidTo);
 			
-			if (!balances.containsKey(payee)) {
-				balances.put(payee, 0.0);
+			if (!balances.containsKey(paidBy)) {
+				balances.put(paidBy, 0.0);
 			}
-			balances.put(payee, balances.get(payee) - split.getAmount());
+			balances.put(paidBy, balances.get(paidBy) - split.getAmount());
 		}
 	}
 	
-	public void showBalance (User user) {
+	public void showBalanceForUser (User user) {
 		//TODO
 	}
 	
-	public void showBalances () {
+	public void showAllBalances () {
 		//TODO
 	}
 
