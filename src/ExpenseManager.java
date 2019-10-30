@@ -18,8 +18,9 @@ public class ExpenseManager {
 		balanceSheet.put(user, new HashMap<User, Double>());
 	}
 	
-	public void addExpense (ExpenseType type, double amount, User paidBy, List<Split> splits, String label) {
+	public void addExpense (ExpenseType type, double amount, String userId, List<Split> splits, String label) {
 		//TODO add expense, add to expenses list, add to balance sheet
+		User paidBy = userMap.get(userId);
 		Expense newExpense = SplitwiseService.createExpense(type, amount, paidBy, splits, label);
 		expenses.add(newExpense);
 		
@@ -44,7 +45,10 @@ public class ExpenseManager {
 		User thisUser = userMap.get(userId);
 		if (thisUser!= null) {
 			for (Map.Entry<User, Double> userBalance : balanceSheet.get(thisUser).entrySet()) {
-				printBalances(userId, userBalance);
+				//We don't want to print balance to self, which will be Zero ideally
+				if (userBalance.getKey()!=thisUser) {
+					printBalances(userId, userBalance);
+				}
 			}
 		}else {
 			System.out.println("User doesn't exist");
@@ -54,14 +58,14 @@ public class ExpenseManager {
 	
 	private void printBalances(String userId, Entry<User, Double> userBalance) {
 		//TODO
-		if (userBalance.getValue()!=0.0) {
+		if (userBalance.getValue()!= 0) {
 			if (userBalance.getValue()<0) {
-				System.out.println(userId+" owes "+Math.abs(userBalance.getValue())+" to "+userBalance.getKey().getId());
+				System.out.println(userMap.get(userId).getName()+" owes "+Math.abs(userBalance.getValue())+" to "+userBalance.getKey().getName());
 			}else {
-				System.out.println(userBalance.getKey().getId()+" owes "+Math.abs(userBalance.getValue())+" to "+userId);
+				System.out.println(userBalance.getKey().getName()+" owes "+Math.abs(userBalance.getValue())+" to "+userMap.get(userId).getName());
 			}
 		}else {
-			System.out.println("No balances");
+			System.out.println("No balances for "+userId);
 		}
 	}
 
