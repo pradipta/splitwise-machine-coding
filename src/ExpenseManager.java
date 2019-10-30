@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.Map.Entry;
 
 public class ExpenseManager {
 	List<Expense> expenses;
@@ -38,10 +39,23 @@ public class ExpenseManager {
 		}
 	}
 	
-	public void showBalanceForUser (User user) {
+	public void showBalanceForUser (String userId) {
 		//TODO
+		User thisUser = userMap.get(userId);
+		if (thisUser!= null) {
+			for (Map.Entry<User, Double> userBalance : balanceSheet.get(thisUser).entrySet()) {
+				printBalances(userBalance);
+			}
+		}else {
+			System.out.println("User doesn't exist");
+		}
+		
 	}
 	
+	private void printBalances(Entry<User, Double> userBalance) {
+		//TODO
+	}
+
 	public void showAllBalances () {
 		//TODO
 	}
