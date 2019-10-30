@@ -13,14 +13,14 @@ public class ExpenseManager {
 		this.balanceSheet = new HashMap<User, Map<User, Double>>();
 	}
 
-	public void addUder(User user) {
+	public void addUser(User user) {
 		userMap.put(user.getId(), user);
 		balanceSheet.put(user, new HashMap<User, Double>());
 	}
 	
-	public void addExpense (ExpenseType type, double amount, User paidBy, List<Split> splits) {
+	public void addExpense (ExpenseType type, double amount, User paidBy, List<Split> splits, String label) {
 		//TODO add expense, add to expenses list, add to balance sheet
-		Expense newExpense = SplitwiseService.createExpense(type, amount, paidBy, splits);
+		Expense newExpense = SplitwiseService.createExpense(type, amount, paidBy, splits, label);
 		expenses.add(newExpense);
 		
 		for (Split split : newExpense.getSplits()) {
@@ -44,7 +44,7 @@ public class ExpenseManager {
 		User thisUser = userMap.get(userId);
 		if (thisUser!= null) {
 			for (Map.Entry<User, Double> userBalance : balanceSheet.get(thisUser).entrySet()) {
-				printBalances(userBalance);
+				printBalances(userId, userBalance);
 			}
 		}else {
 			System.out.println("User doesn't exist");
@@ -52,8 +52,17 @@ public class ExpenseManager {
 		
 	}
 	
-	private void printBalances(Entry<User, Double> userBalance) {
+	private void printBalances(String userId, Entry<User, Double> userBalance) {
 		//TODO
+		if (userBalance.getValue()!=0.0) {
+			if (userBalance.getValue()<0) {
+				System.out.println(userId+" owes "+Math.abs(userBalance.getValue())+" to "+userBalance.getKey().getId());
+			}else {
+				System.out.println(userBalance.getKey().getId()+" owes "+Math.abs(userBalance.getValue())+" to "+userId);
+			}
+		}else {
+			System.out.println("No balances");
+		}
 	}
 
 	public void showAllBalances () {
