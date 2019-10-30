@@ -1,16 +1,16 @@
 
 public abstract class Split {
-    private double amount;
-    private User user;
-    
-    public Split (double amount, User user){
-        this.setAmount(amount);
-        this.setUser(user);
-    }
-    
-    public Split (User user) {
-    	this.user = user;
-    }
+	private double amount;
+	private User user;
+
+	public Split(double amount, User user) {
+		this.setAmount(amount);
+		this.setUser(user);
+	}
+
+	public Split(User user) {
+		this.user = user;
+	}
 
 	public User getUser() {
 		return user;
