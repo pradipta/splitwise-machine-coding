@@ -5,9 +5,10 @@ public class SplitwiseService {
 	public static Expense createExpense(ExpenseType type, double amount, User payee, List<Split> splits) {
 		switch (type) {
 		case EQUAL:
+			int totalSplits = splits.size();
 			return new EqualExpense(amount, payee, new Date(), splits);
 		default:
-			return new EqualExpense(amount, payee, new Date(), splits);
+			System.out.println("Not implemented yet");
 		}
 	}
 }
