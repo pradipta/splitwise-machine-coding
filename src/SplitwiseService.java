@@ -23,10 +23,10 @@ public class SplitwiseService {
 			}
 			return new PercentExpense(amount, paidBy, new Date(), splits, label);
 		case EXACT:
-
+			return new ExactExpense(amount, paidBy, new Date(), splits, label);
 		default:
 			System.out.println("Invalid split type");
+			return null;
 		}
-
 	}
 }

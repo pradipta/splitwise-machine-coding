@@ -53,7 +53,6 @@ public class ExpenseManager {
 		}else {
 			System.out.println("User doesn't exist");
 		}
-		
 	}
 	
 	private void printBalances(String userId, Entry<User, Double> userBalance) {

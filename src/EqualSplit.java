@@ -1,6 +1,6 @@
 
 public class EqualSplit extends Split {
-	public EqualSplit(User user, Double amount) {
+	public EqualSplit(Double amount, User user) {
 		super(amount,user);
 	}
 }

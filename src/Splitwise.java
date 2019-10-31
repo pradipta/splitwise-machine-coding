@@ -45,13 +45,13 @@ public class Splitwise {
 		String label = scanner.nextLine();
 		System.out.println("Enter amount");
 		double amount = Double.parseDouble(scanner.nextLine());
-		splits.add(new EqualSplit(expenseManager.userMap.get(paidBy), amount));
+		splits.add(new EqualSplit(amount,expenseManager.userMap.get(paidBy)));
 		for (int i = 1; i<noOfUsers; i++){
 			System.out.println("Participant "+(i+1));
 			System.out.println("Enter user id: ");
 			String userIdNow = scanner.nextLine();
 			//TODO put check if user exists
-			splits.add(new EqualSplit(expenseManager.userMap.get(userIdNow), amount));
+			splits.add(new EqualSplit(amount,expenseManager.userMap.get(userIdNow)));
 		}
 		System.out.println("Select Split type: Equal [1]");
 		String type = scanner.nextLine();
