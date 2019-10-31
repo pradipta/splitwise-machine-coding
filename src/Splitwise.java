@@ -40,24 +40,44 @@ public class Splitwise {
 					createExpense(expenseManager, scanner);
 					break;
 				case "2":
+					viewBalance();
 					break;
 			}
 		}
+	}
+
+	private static void viewBalance() {
+		//TODO
 	}
 
 	private static void createExpense(ExpenseManager expenseManager, Scanner scanner) {
 		System.out.println("Enter no. of Users:");
 		int noOfUsers = Integer.parseInt(scanner.nextLine());
 		List<Split> splits = new ArrayList<>();
+		System.out.println("Who paid?");
+		String paidBy = scanner.nextLine();
 		System.out.println("What did you spend on?");
 		String label = scanner.nextLine();
 		System.out.println("Enter amount");
 		double amount = Double.parseDouble(scanner.nextLine());
-		for (int i = 0; i<noOfUsers; i++){
+		splits.add(new EqualSplit(expenseManager.userMap.get(paidBy), amount));
+		for (int i = 1; i<noOfUsers; i++){
 			System.out.println("Participant "+(i+1));
 			System.out.println("Enter user id: ");
 			String userIdNow = scanner.nextLine();
-			splits.add(new EqualSplit(expenseManager.userMap.get("pradipta"), amount));
+			//TODO put check if user exists
+			splits.add(new EqualSplit(expenseManager.userMap.get(userIdNow), amount));
 		}
+		System.out.println("Select Split type: Equal [1]");
+		String type = scanner.nextLine();
+		//TODO Switch case for type
+		System.out.println("Type is: "+type);
+		if (type.toLowerCase().equals("equal")){
+			expenseManager.addExpense(ExpenseType.EQUAL, amount, paidBy, splits, label);
+		}else{
+			System.out.println("Invalid type. Only equal supported for now.");
+		}
+
+		expenseManager.showBalanceForUser("pradipta");
 	}
 }
