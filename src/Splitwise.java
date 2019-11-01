@@ -49,10 +49,47 @@ public class Splitwise {
 			case "1":
 				createEqualExpense(expenseManager, scanner);
 				break;
+			case "2":
+				createExactExpense(expenseManager, scanner);
+				break;
+			case "3":
+				createPercentExpense(expenseManager, scanner);
 			default:
-				System.out.println("Not supported. Wait for update.");
+				System.out.println("Incorrect option");
 				return;
 		}
+	}
+
+	private static void createPercentExpense(ExpenseManager expenseManager, Scanner scanner) {
+	}
+
+	private static void createExactExpense(ExpenseManager expenseManager, Scanner scanner) {
+		System.out.println("Enter no. of Users:");
+		int noOfUsers = Integer.parseInt(scanner.nextLine());
+		List<Split> splits = new ArrayList<>();
+		System.out.println("Who paid?");
+		String paidBy = scanner.nextLine();
+		System.out.println("What did you spend on?");
+		String label = scanner.nextLine();
+		System.out.println("Enter total amount");
+		double amount = Double.parseDouble(scanner.nextLine());
+
+		System.out.println("Enter amount paid by "+paidBy+":");
+		double amountIndi = Double.parseDouble(scanner.nextLine());
+		double amountCheck = amountIndi;
+
+		splits.add(new ExactSplit(amountIndi,expenseManager.userMap.get(paidBy)));
+		for (int i = 1; i<noOfUsers; i++){
+			System.out.println("Participant "+(i+1));
+			System.out.println("Enter user id: ");
+			String userIdNow = scanner.nextLine();
+			System.out.println("Enter amount paid by "+userIdNow+":");
+			amountIndi = Double.parseDouble(scanner.nextLine());
+			splits.add(new ExactSplit(amountIndi,expenseManager.userMap.get(userIdNow)));
+		}
+		//TODO check total amount equal to sum of all
+		expenseManager.addExpense(ExpenseType.EXACT, amount, paidBy, splits, label);
+		expenseManager.showBalanceForUser(paidBy);
 	}
 
 	private static void createEqualExpense(ExpenseManager expenseManager, Scanner scanner) {
