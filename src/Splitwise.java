@@ -11,6 +11,8 @@ public class Splitwise {
 		expenseManager.addUser(new User("hemant", "Hemant Saikia", "hmnt.ska23@gmail.com", "7123123123"));
 		expenseManager.addUser(new User("asmita", "Asmita Dutta", "asmita.dutta@outlook.com", "8133910729"));
 		expenseManager.addUser(new User("jishnu", "Jishnu Sankar Bora", "jb@al.com", "1231231232"));
+		expenseManager.addUser(new User("swaranga", "Swaranga Sarma", "s@s.com", "1212121212"));
+		expenseManager.addUser(new User("debanga", "Debanga Sarma", "d@d.com", "4747474747"));
 
 		Scanner scanner = new Scanner(System.in);
 		while (true){
@@ -36,6 +38,24 @@ public class Splitwise {
 	}
 
 	private static void createExpense(ExpenseManager expenseManager, Scanner scanner) {
+		System.out.println("Choose split type:");
+		System.out.println("1. Equal");
+		System.out.println("2. Exact");
+		System.out.println("3. Percent");
+
+		String splitType = scanner.nextLine();
+
+		switch(splitType){
+			case "1":
+				createEqualExpense(expenseManager, scanner);
+				break;
+			default:
+				System.out.println("Not supported. Wait for update.");
+				return;
+		}
+	}
+
+	private static void createEqualExpense(ExpenseManager expenseManager, Scanner scanner) {
 		System.out.println("Enter no. of Users:");
 		int noOfUsers = Integer.parseInt(scanner.nextLine());
 		List<Split> splits = new ArrayList<>();
@@ -53,16 +73,7 @@ public class Splitwise {
 			//TODO put check if user exists
 			splits.add(new EqualSplit(amount,expenseManager.userMap.get(userIdNow)));
 		}
-		System.out.println("Select Split type: Equal [1]");
-		String type = scanner.nextLine();
-		//TODO Switch case for type
-		System.out.println("Type is: "+type);
-		if (type.toLowerCase().equals("equal")){
-			expenseManager.addExpense(ExpenseType.EQUAL, amount, paidBy, splits, label);
-		}else{
-			System.out.println("Invalid type. Only equal supported for now.");
-		}
-
+		expenseManager.addExpense(ExpenseType.EQUAL, amount, paidBy, splits, label);
 		expenseManager.showBalanceForUser(paidBy);
 	}
 }
