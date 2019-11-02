@@ -54,6 +54,7 @@ public class Splitwise {
 				break;
 			case "3":
 				createPercentExpense(expenseManager, scanner);
+				break;
 			default:
 				System.out.println("Incorrect option");
 				return;
@@ -61,6 +62,34 @@ public class Splitwise {
 	}
 
 	private static void createPercentExpense(ExpenseManager expenseManager, Scanner scanner) {
+		System.out.println("Enter no. of Users:");
+		int noOfUsers = Integer.parseInt(scanner.nextLine());
+		List<Split> splits = new ArrayList<>();
+		System.out.println("Who paid?");
+		String paidBy = scanner.nextLine();
+		System.out.println("What did you spend on?");
+		String label = scanner.nextLine();
+		System.out.println("Enter amount");
+		double amount = Double.parseDouble(scanner.nextLine());
+
+		System.out.println("Enter percentage shared by "+paidBy+":");
+		double percentIndi = Double.parseDouble(scanner.nextLine());
+		double percentCheck = percentIndi;
+
+		//TODO check for total percentage
+		splits.add(new PercentSplit(expenseManager.userMap.get(paidBy), percentIndi));
+
+		for (int i = 1; i<noOfUsers; i++){
+			System.out.println("Participant "+(i+1));
+			System.out.println("Enter user id: ");
+			String userIdNow = scanner.nextLine();
+			System.out.println("Enter percentage shared by "+userIdNow+":");
+			percentIndi = Double.parseDouble(scanner.nextLine());
+			splits.add(new PercentSplit(expenseManager.userMap.get(userIdNow), percentIndi));
+		}
+
+		expenseManager.addExpense(ExpenseType.PERCENT, amount, paidBy, splits, label);
+		expenseManager.showBalanceForUser(paidBy);
 	}
 
 	private static void createExactExpense(ExpenseManager expenseManager, Scanner scanner) {
