@@ -60,12 +60,12 @@ public class ExpenseManager {
 		if (userBalance.getValue()!= 0) {
 			if (userBalance.getValue()<0) {
 				System.out.println(userMap.get(userId).getName()+" owes "+Math.abs(userBalance.getValue())+" to "+userBalance.getKey().getName());
-			}else {
-				System.out.println(userBalance.getKey().getName()+" owes "+Math.abs(userBalance.getValue())+" to "+userMap.get(userId).getName());
+				return;
 			}
-		}else {
-			System.out.println("No balances for "+userId);
+			System.out.println(userBalance.getKey().getName()+" owes "+Math.abs(userBalance.getValue())+" to "+userMap.get(userId).getName());
+			return;
 		}
+		System.out.println("No balances for "+userId);
 	}
 
 	public void showAllBalances () {
