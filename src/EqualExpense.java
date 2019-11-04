@@ -8,9 +8,7 @@ public class EqualExpense extends Expense {
 	@Override
 	public boolean validate() {
 		for (Split split : super.getSplits()) {
-			if (!(split instanceof EqualSplit)) {
-				return false;
-			}
+			if (!(split instanceof EqualSplit)) return false;
 		}
 		return true;
 	}
