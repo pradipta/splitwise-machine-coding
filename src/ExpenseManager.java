@@ -43,15 +43,15 @@ public class ExpenseManager {
 	public void showBalanceForUser (String userId) {
 		//TODO
 		User thisUser = userMap.get(userId);
-		if (thisUser!= null) {
-			for (Map.Entry<User, Double> userBalance : balanceSheet.get(thisUser).entrySet()) {
-				//We don't want to print balance to self, which will be Zero ideally
-				if (userBalance.getKey()!=thisUser) {
-					printBalances(userId, userBalance);
-				}
-			}
-		}else {
+		if (thisUser == null){
 			System.out.println("User doesn't exist");
+			return;
+		}
+		for (Map.Entry<User, Double> userBalance : balanceSheet.get(thisUser).entrySet()) {
+			//We don't want to print balance to self, which will be Zero ideally
+			if (userBalance.getKey()!=thisUser) {
+				printBalances(userId, userBalance);
+			}
 		}
 	}
 	
