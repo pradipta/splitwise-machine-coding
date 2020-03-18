@@ -1,4 +1,4 @@
-
+//good job
 public abstract class Split {
 	private double amount;
 	private User user;
